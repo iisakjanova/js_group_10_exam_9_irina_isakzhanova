@@ -1,15 +1,19 @@
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {Backdrop, Button, CircularProgress, Grid, TextField} from "@mui/material";
+import {makeStyles} from "@mui/styles";
+import {Backdrop, Button, CircularProgress, Grid, TextField, Typography} from "@mui/material";
 
 import {addContact, editContact, getContactById} from "../../store/actions";
-import {makeStyles} from "@mui/styles";
 
 const useStyles = makeStyles(theme => ({
     btn: {
         marginRight: "10px !important",
     },
+    img: {
+        width: "100px",
+        height: "auto"
+    }
 }));
 
 const initialState =  {
@@ -18,6 +22,8 @@ const initialState =  {
     email: '',
     photo: '',
 };
+
+const defaultPhoto = 'https://icon-library.com/images/no-photo-icon/no-photo-icon-0.jpg';
 
 const ContactForm = ({id}) => {
     const classes = useStyles();
@@ -128,6 +134,10 @@ const ContactForm = ({id}) => {
                             fullWidth
                             variant="outlined"
                         />
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="subtitle1">Photo preview</Typography>
+                        <img src={contact.photo || defaultPhoto} alt={'incorrect url'} className={classes.img}/>
                     </Grid>
                     <Grid item>
                         <Button
