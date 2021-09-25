@@ -1,5 +1,7 @@
 import axiosApi from "../axiosApi";
 
+export const SET_MODAL_OPEN = 'SET_MODAL_OPEN';
+
 export const ADD_CONTACT_REQUEST = 'ADD_CONTACT_REQUEST';
 export const ADD_CONTACT_SUCCESS = 'ADD_CONTACT_SUCCESS';
 export const ADD_CONTACT_FAILURE = 'ADD_CONTACT_FAILURE';
@@ -15,6 +17,8 @@ export const GET_CONTACTS_FAILURE = 'GET_CONTACTS_FAILURE';
 export const GET_CONTACT_BY_ID_REQUEST = 'GET_CONTACT_BY_ID_REQUEST';
 export const GET_CONTACT_BY_ID_SUCCESS = 'GET_CONTACT_BY_ID_SUCCESS';
 export const GET_CONTACT_BY_ID_FAILURE = 'GET_CONTACT_BY_ID_FAILURE';
+
+export const setModalOpen = isOpen => ({type: SET_MODAL_OPEN, payload: isOpen});
 
 export const addContactRequest = () => ({type: ADD_CONTACT_REQUEST});
 export const addContactSuccess = () => ({type: ADD_CONTACT_SUCCESS});

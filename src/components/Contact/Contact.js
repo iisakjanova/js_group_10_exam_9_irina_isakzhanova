@@ -25,7 +25,7 @@ const Contact = (props) => {
     const classes = useStyles();
 
     return (
-        <Paper>
+        <Paper onClick={props.onClick}>
             <Grid container direction="row" className={classes.item}>
                 <Grid item className={classes.imageWrapper}>
                     <img src={props.image} className={classes.image} />

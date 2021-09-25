@@ -11,15 +11,19 @@ import {
     GET_CONTACTS_FAILURE,
     GET_CONTACTS_REQUEST,
     GET_CONTACTS_SUCCESS,
+    SET_MODAL_OPEN,
 } from "./actions";
 
 const initialState = {
     contacts: '',
     loading: false,
+    showModal: false,
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_MODAL_OPEN:
+            return {...state, showModal: action.payload};
         case ADD_CONTACT_REQUEST:
             return {...state, loading: true};
         case ADD_CONTACT_SUCCESS:
