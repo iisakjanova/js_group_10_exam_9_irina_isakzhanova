@@ -12,8 +12,8 @@ const useStyles = makeStyles(theme => ({
     },
     img: {
         width: "100px",
-        height: "auto"
-    }
+        height: "auto",
+    },
 }));
 
 const initialState =  {
