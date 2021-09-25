@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {Box, Button, CircularProgress, Grid, Modal, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import EmailIcon from '@mui/icons-material/Email';
 
 import {removeContact, removeContactFromState} from "../../store/actions";
 
@@ -89,15 +91,17 @@ const ContactModal = (props) => {
                         <Grid container direction="column" spacing={2}>
 
                             <Grid item className={classes.info}>
-                                <Typography variant="h4">
+                                <Typography variant="h5">
                                     {contact?.name}
                                 </Typography>
-                                <Typography variant="subtitle1">
-                                    Phone: {contact?.phone}
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    Email: {contact?.email}
-                                </Typography>
+                                <Grid container direction="row">
+                                    <PhoneIphoneIcon />
+                                    <Typography variant="subtitle1">{contact?.phone}</Typography>
+                                </Grid>
+                                <Grid container direction="row">
+                                    <EmailIcon />
+                                    <Typography variant="subtitle1">{contact?.email}</Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -110,6 +114,7 @@ const ContactModal = (props) => {
                     </Button>
                     <Button
                         variant="outlined"
+                        color="error"
                         onClick={() => handleRemove(props.contactId)}
                         className={classes.btn}
                     >
