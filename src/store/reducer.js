@@ -4,7 +4,10 @@ import {
     ADD_CONTACT_SUCCESS,
     EDIT_CONTACT_FAILURE,
     EDIT_CONTACT_REQUEST,
-    EDIT_CONTACT_SUCCESS
+    EDIT_CONTACT_SUCCESS,
+    GET_CONTACT_BY_ID_FAILURE,
+    GET_CONTACT_BY_ID_REQUEST,
+    GET_CONTACT_BY_ID_SUCCESS,
 } from "./actions";
 
 const initialState = {
@@ -25,6 +28,18 @@ const reducer = (state = initialState, action) => {
         case EDIT_CONTACT_SUCCESS:
             return {...state, loading: false};
         case EDIT_CONTACT_FAILURE:
+            return {...state, loading: false, error: action.payload};
+        case GET_CONTACT_BY_ID_REQUEST:
+            return {...state, loading: true};
+        case GET_CONTACT_BY_ID_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                contacts: {
+                    ...state.contacts,
+                    [action.payload.id]: action.payload.contact
+                }};
+        case GET_CONTACT_BY_ID_FAILURE:
             return {...state, loading: false, error: action.payload};
         default:
             return state;
