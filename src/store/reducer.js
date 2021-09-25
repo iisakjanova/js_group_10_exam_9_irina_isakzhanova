@@ -11,6 +11,10 @@ import {
     GET_CONTACTS_FAILURE,
     GET_CONTACTS_REQUEST,
     GET_CONTACTS_SUCCESS,
+    REMOVE_CONTACT_FAILURE,
+    REMOVE_CONTACT_FROM_STATE,
+    REMOVE_CONTACT_REQUEST,
+    REMOVE_CONTACT_SUCCESS,
     SET_MODAL_OPEN,
 } from "./actions";
 
@@ -35,6 +39,19 @@ const reducer = (state = initialState, action) => {
         case EDIT_CONTACT_SUCCESS:
             return {...state, loading: false};
         case EDIT_CONTACT_FAILURE:
+            return {...state, loading: false, error: action.payload};
+        case REMOVE_CONTACT_FROM_STATE:
+            const {[action.payload]: _, ...restContacts} = state.contacts;
+
+            return {
+                ...state,
+                contacts: restContacts,
+            };
+        case REMOVE_CONTACT_REQUEST:
+            return {...state, loading: true};
+        case REMOVE_CONTACT_SUCCESS:
+            return {...state, loading: false};
+        case REMOVE_CONTACT_FAILURE:
             return {...state, loading: false, error: action.payload};
         case GET_CONTACTS_REQUEST:
             return {...state, loading: true};

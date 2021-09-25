@@ -28,7 +28,7 @@ const Contact = (props) => {
         <Paper onClick={props.onClick}>
             <Grid container direction="row" className={classes.item}>
                 <Grid item className={classes.imageWrapper}>
-                    <img src={props.image} className={classes.image} />
+                    <img src={props.image} alt={props.name} className={classes.image} />
                 </Grid>
                 <Grid item className={classes.name}>
                     <Typography variant="subtitle1">{props.name}</Typography>

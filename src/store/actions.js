@@ -18,6 +18,11 @@ export const GET_CONTACT_BY_ID_REQUEST = 'GET_CONTACT_BY_ID_REQUEST';
 export const GET_CONTACT_BY_ID_SUCCESS = 'GET_CONTACT_BY_ID_SUCCESS';
 export const GET_CONTACT_BY_ID_FAILURE = 'GET_CONTACT_BY_ID_FAILURE';
 
+export const REMOVE_CONTACT_FROM_STATE = 'REMOVE_CONTACT_FROM_STATE';
+export const REMOVE_CONTACT_REQUEST = 'REMOVE_CONTACT_REQUEST';
+export const REMOVE_CONTACT_SUCCESS = 'REMOVE_CONTACT_SUCCESS';
+export const REMOVE_CONTACT_FAILURE = 'REMOVE_CONTACT_FAILURE';
+
 export const setModalOpen = isOpen => ({type: SET_MODAL_OPEN, payload: isOpen});
 
 export const addContactRequest = () => ({type: ADD_CONTACT_REQUEST});
@@ -35,6 +40,11 @@ export const getContactsFailure = error => ({type: GET_CONTACT_BY_ID_FAILURE, pa
 export const getContactByIdRequest = () => ({type: GET_CONTACT_BY_ID_REQUEST});
 export const getContactByIdSuccess = (id, contact) => ({type: GET_CONTACT_BY_ID_SUCCESS, payload: {id, contact}});
 export const getContactByIdFailure = error => ({type: GET_CONTACT_BY_ID_FAILURE, payload: error});
+
+export const removeContactFromState = id => ({type: REMOVE_CONTACT_FROM_STATE, payload: id});
+export const removeContactRequest = () => ({type: REMOVE_CONTACT_REQUEST});
+export const removeContactSuccess = () => ({type: REMOVE_CONTACT_SUCCESS});
+export const removeContactFailure = error => ({type: REMOVE_CONTACT_FAILURE, payload: error});
 
 export const addContact = (data) => {
     return async dispatch => {
@@ -80,6 +90,18 @@ export const getContactById = (id) => {
             dispatch(getContactByIdSuccess(id, response.data));
         } catch (error) {
             dispatch(getContactByIdFailure(error));
+        }
+    };
+};
+
+export const removeContact = id => {
+    return async dispatch => {
+        try {
+            dispatch(removeContactRequest());
+            await axiosApi.delete(`/contacts/${id}.json`);
+            dispatch(removeContactSuccess());
+        } catch (error) {
+            dispatch(removeContactFailure(error));
         }
     };
 };

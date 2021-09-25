@@ -1,7 +1,10 @@
 import React from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 import {Box, Button, CircularProgress, Grid, Modal, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
+
+import {removeContact, removeContactFromState} from "../../store/actions";
 
 const style = {
     position: 'absolute',
@@ -41,7 +44,9 @@ const useStyles = makeStyles(theme => ({
 
 const ContactModal = (props) => {
     const classes = useStyles();
+    const history = useHistory();
 
+    const dispatch = useDispatch();
     const modalOpen = useSelector(state => state.showModal);
     const loading = useSelector(state => state.loading);
     const contacts = useSelector(state => state.contacts);
@@ -52,6 +57,16 @@ const ContactModal = (props) => {
 
     const contact = contacts[props.contactId];
 
+    const handleRemove = async (id) => {
+        dispatch(removeContactFromState(id));
+        await dispatch(removeContact(id));
+        props.close();
+    };
+
+    const handleEdit = (id) => {
+        history.push(`/edit/${id}`);
+    };
+
     return (
         <>
             <Modal
@@ -60,29 +75,46 @@ const ContactModal = (props) => {
             >
                 <Box sx={style}>
                     <Grid container direction="row">
-                        <Button onClick={props.close} className={classes.btnClose}><b>X</b></Button>
+                        <Button
+                            onClick={props.close}
+                            className={classes.btnClose}
+                        >
+                            <b>X</b>
+                        </Button>
                     </Grid>
                     <Grid container direction="row" className={classes.item}>
                         <Grid item className={classes.imageWrapper}>
-                            <img src={contact.photo} className={classes.image} />
+                            <img src={contact?.photo} alt={contact?.name} className={classes.image} />
                         </Grid>
                         <Grid container direction="column" spacing={2}>
 
                             <Grid item className={classes.info}>
                                 <Typography variant="h4">
-                                    {contact.name}
+                                    {contact?.name}
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Phone: {contact.phone}
+                                    Phone: {contact?.phone}
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Email: {contact.email}
+                                    Email: {contact?.email}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Button variant="outlined" className={classes.btn}>Edit</Button>
-                    <Button variant="outlined" className={classes.btn}>Delete</Button>
+                    <Button
+                        variant="outlined"
+                        className={classes.btn}
+                        onClick={() => handleEdit(props.contactId)}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => handleRemove(props.contactId)}
+                        className={classes.btn}
+                    >
+                        Delete
+                    </Button>
                     {loading
                         ?
                         <CircularProgress />
